@@ -1,0 +1,52 @@
+{% extends 'movies/base.html'%}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+
+    <div class = "container">
+        <br><br>
+        <div class="row">
+            <div class="col-md-5">
+              <br>
+              <img class="img-fluid" src="{{ movie.poster }}" alt="" style = "width: 90%;">
+              <br><br>
+              <h3 class="card-title text-center ">{{ movie.title }}</h3>
+            </div>
+            <div class="col-md-7" >
+                <div class="container">
+                 <h1 class="my-3">Plot</h1>
+                  <p class = "lead">{{ movie.plot }}</p>
+                  <h1 class="my-3">Movie Details</h1>
+                  <ul class="list-group">
+                    <li class="list-group-item list-group-item-light">Genre: {{ movie.genre }}</li>
+                    <li class="list-group-item list-group-item-light">Year: {{ movie.year }}</li>
+                      <li class="list-group-item list-group-item-light">Actors: {{ movie.actors }}</li>
+                      <li class="list-group-item list-group-item-light">Released: {{ movie.released }}</li>
+                  </ul>
+                <br>
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4"><strong>Add a Comment</strong></legend>
+                          <form action="{% url 'add_comment' movie_id=movie.id %}" method=POST>
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                              <br>
+                              <button type = "submit" class = "btn-primary btn-sm">Add Comment</button>
+                          </form>
+                </fieldset>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+<br>
+    <article class="media content-section">
+        <div class="media-body">
+          <div class="article-metadata">
+              <p><span class="mr-2" ><strong>{{comment.name}}</strong>   {{comment.created_at}}</span></p>
+            </div>
+          <p class="article-content">{{ comment.content }}</p>
+        </div>
+      </article>
+
+{% endblock %}

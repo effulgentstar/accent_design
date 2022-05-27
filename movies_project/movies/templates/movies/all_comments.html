@@ -1,0 +1,30 @@
+{% extends 'movies/base.html'%}
+{% block content %}
+
+    <div class = "container">
+      <br>
+      <h2 class = "text-center">Comments</h2>
+      <br>
+      <form action="{% url 'get_comments' %}" method=GET>
+        {% csrf_token %}
+        {{ form }}
+        <button type = "submit" class = "btn-primary btn-sm">Go</button>
+      </form>
+    </div>
+<br><br>
+  {% for comment in comments %}
+      <article class="media content-section">
+        <div class="media-body">
+          <div class="article-metadata">
+            <div class="text-center">
+              <p>{{ comment.movie.title }}</p>
+            </div>
+              <hr>
+              <p><span class="mr-2" ><strong>{{comment.name}}</strong> {{comment.created_at}}</span></p>
+            </div>
+          <p class="article-content">{{ comment.content }}</p>
+        </div>
+      </article>
+  {% endfor %}
+
+{% endblock %}
